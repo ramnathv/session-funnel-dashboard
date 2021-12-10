@@ -18,7 +18,14 @@ st.set_page_config(layout="wide")
 
 st.title("Session Conversion Dashboard")
 
-data = pd.read_csv("data/events.csv")
+
+@st.cache
+def load_data():
+    url = "https://raw.githubusercontent.com/ramnathv/dbt-explore/main/dbt-greenery/exposures/events.csv"
+    return pd.read_csv(url)
+
+
+data = load_data()
 data_enriched = enrich_data(data)
 
 option = st.sidebar.selectbox(
